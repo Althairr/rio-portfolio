@@ -68,7 +68,7 @@ useEffect(() => {
         </div>
       </div>
 
-      {/* <ComputersCanvas /> */}
+      <ComputersCanvas />
 
       <div className="absolute left-0 z-10 flex justify-center w-full bottom-2">
         <a href="#about">
