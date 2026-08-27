@@ -76,16 +76,9 @@ import CanvasLoader from "../Loader";
 
 const ComputersCanvas = () => {
   return (
-    <Canvas
-      camera={{ position: [0, 0, 5], fov: 50 }}
-    >
-      <ambientLight intensity={1} />
-
-      <mesh>
-        <boxGeometry args={[2, 2, 2]} />
-        <meshStandardMaterial color="#915EFF" />
-      </mesh>
-    </Canvas>
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div className="w-40 h-40 bg-[#915EFF] rounded-2xl" />
+    </div>
   );
 };
 
