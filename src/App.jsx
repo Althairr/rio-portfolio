@@ -4,6 +4,20 @@ import { About, Contact, Experience, Feedbacks, Hero, Navbar, Tech, Works, Socia
 import Certificates from "./components/Certificates";
 
 const App = () => {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 1025px)");
+
+    setIsDesktop(mediaQuery.matches);
+
+    const handleChange = (e) => setIsDesktop(e.matches);
+
+    mediaQuery.addEventListener("change", handleChange);
+
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+  
   return (
     <BrowserRouter>
       <div className='relative z-0 bg-primary'>
@@ -20,7 +34,7 @@ const App = () => {
         <div className='relative z-0'>
           <Contact />
           <Socials />
-          {/* <StarsCanvas /> */}
+           {isDesktop && <StarsCanvas />}
         </div>
       </div>
     </BrowserRouter>
