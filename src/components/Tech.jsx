@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import { BallCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { technologies } from "../constants";
@@ -15,6 +16,7 @@ const Tech = () => {
     };
 
     setIsMobile(mediaQuery.matches);
+
     mediaQuery.addEventListener("change", handleChange);
 
     return () => {
@@ -25,42 +27,35 @@ const Tech = () => {
   useEffect(() => {
     if (!isMobile) return;
 
-    const shuffleTechnologies = () => {
+    const getRandomTechnologies = () => {
       const shuffled = [...technologies].sort(
         () => Math.random() - 0.5
       );
 
-      setMobileTechnologies(shuffled.slice(0, 6));
+      return shuffled.slice(0, 6);
     };
 
-    shuffleTechnologies();
+    setMobileTechnologies(getRandomTechnologies());
 
-    const interval = setInterval(shuffleTechnologies, 7000);
+    const interval = setInterval(() => {
+      setMobileTechnologies(getRandomTechnologies());
+    }, 8000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+    };
   }, [isMobile]);
 
-  if (isMobile) {
-    return (
-      <div className="flex flex-row flex-wrap justify-center gap-10">
-        {mobileTechnologies.map((technology, index) => (
-          <div
-            className="w-28 h-28"
-            key={index}
-          >
-            <BallCanvas icon={technology.icon} />
-          </div>
-        ))}
-      </div>
-    );
-  }
+  const displayedTechnologies = isMobile
+    ? mobileTechnologies
+    : technologies;
 
   return (
     <div className="flex flex-row flex-wrap justify-center gap-10">
-      {technologies.map((technology) => (
+      {displayedTechnologies.map((technology, index) => (
         <div
           className="w-28 h-28"
-          key={technology.name}
+          key={isMobile ? index : technology.name}
         >
           <BallCanvas icon={technology.icon} />
         </div>
