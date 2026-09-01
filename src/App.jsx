@@ -1,5 +1,5 @@
 import { BrowserRouter } from "react-router-dom";
-
+import { useEffect, useState } from "react";
 import { About, Contact, Experience, Feedbacks, Hero, Navbar, Tech, Works, Socials, StarsCanvas } from "./components";
 import Certificates from "./components/Certificates";
 
