@@ -39,7 +39,7 @@ const Tech = () => {
 
     const interval = setInterval(() => {
       setMobileTechnologies(getRandomTechnologies());
-    }, 8000);
+    }, 12000);
 
     return () => {
       clearInterval(interval);
