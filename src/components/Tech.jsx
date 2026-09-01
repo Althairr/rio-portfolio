@@ -35,7 +35,7 @@ const Tech = () => {
 
     shuffleTechnologies();
 
-    const interval = setInterval(shuffleTechnologies, 3000);
+    const interval = setInterval(shuffleTechnologies, 7000);
 
     return () => clearInterval(interval);
   }, [isMobile]);
