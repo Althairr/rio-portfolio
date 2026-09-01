@@ -108,9 +108,9 @@ const ComputersCanvas = () => {
   }, []);
 
   // Mobile: tidak menggunakan WebGL
-  // if (isMobile) {
-  //   return <MobileFallback />;
-  // }
+  if (isMobile) {
+    return <MobileFallback />;
+  }
 
   return (
     <Canvas
