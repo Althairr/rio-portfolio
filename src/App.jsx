@@ -33,7 +33,8 @@ const App = () => {
         <div className='relative z-0'>
           <Contact />
           <Socials />
-           {isDesktop && <StarsCanvas />}
+           {/* {isDesktop && <StarsCanvas />} */}
+          <StarsCanvas />
         </div>
       </div>
     </BrowserRouter>

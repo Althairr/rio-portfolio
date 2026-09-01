@@ -65,6 +65,10 @@ useEffect(() => {
               with curiosity and a passion for learning.
             </span>
           </p>
+
+          <p className="mt-3 text-xs text-secondary sm:hidden">
+            Best experienced on PC
+          </p>
         </div>
       </div>
 
