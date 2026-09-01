@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import { BallCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { technologies } from "../constants";
@@ -16,7 +15,6 @@ const Tech = () => {
     };
 
     setIsMobile(mediaQuery.matches);
-
     mediaQuery.addEventListener("change", handleChange);
 
     return () => {
@@ -27,34 +25,39 @@ const Tech = () => {
   useEffect(() => {
     if (!isMobile) return;
 
-    const getRandomTechnologies = () => {
+    const shuffleTechnologies = () => {
       const shuffled = [...technologies].sort(
         () => Math.random() - 0.5
       );
 
-      return shuffled.slice(0, 6);
+      setMobileTechnologies(shuffled.slice(0, 6));
     };
 
-    // Pilihan pertama
-    setMobileTechnologies(getRandomTechnologies());
+    shuffleTechnologies();
 
-    // Ganti icon setiap 3 detik
-    const interval = setInterval(() => {
-      setMobileTechnologies(getRandomTechnologies());
-    }, 4000);
+    const interval = setInterval(shuffleTechnologies, 3000);
 
-    return () => {
-      clearInterval(interval);
-    };
+    return () => clearInterval(interval);
   }, [isMobile]);
 
-  const displayedTechnologies = isMobile
-    ? mobileTechnologies
-    : technologies;
+  if (isMobile) {
+    return (
+      <div className="flex flex-row flex-wrap justify-center gap-10">
+        {mobileTechnologies.map((technology, index) => (
+          <div
+            className="w-28 h-28"
+            key={index}
+          >
+            <BallCanvas icon={technology.icon} />
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-row flex-wrap justify-center gap-10">
-      {displayedTechnologies.map((technology) => (
+      {technologies.map((technology) => (
         <div
           className="w-28 h-28"
           key={technology.name}
