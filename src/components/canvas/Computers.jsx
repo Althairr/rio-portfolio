@@ -1,15 +1,23 @@
 import React, { Suspense, useEffect, useState } from "react";
-import { Canvas } from "@react-three/fiber"
-import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import {
+  OrbitControls,
+  Preload,
+  useGLTF,
+  Float,
+  MeshDistortMaterial,
+  Sparkles,
+} from "@react-three/drei";
 
 import CanvasLoader from "../Loader";
 
+// Model komputer detail — dipakai untuk desktop saja
 const Computers = ({ isMobile }) => {
   const computer = useGLTF("/desktop_pc/scene.gltf");
 
   return (
-    <mesh>
-      <hemisphereLight intensity={0.25} groundColor='black' />
+    <group>
+      <hemisphereLight intensity={0.25} groundColor="black" />
       <spotLight
         position={[-20, 50, 10]}
         angle={0.12}
@@ -25,7 +33,38 @@ const Computers = ({ isMobile }) => {
         position={isMobile ? [0, -2.8, -2.2] : [0, -2.8, -1.5]}
         rotation={[-0.01, -0.2, -0.1]}
       />
-    </mesh>
+    </group>
+  );
+};
+
+// Versi ringan untuk mobile — tanpa load file eksternal sama sekali
+const MobileHero = () => {
+  return (
+    <group position={[0, -1.8, 0]}>
+      <hemisphereLight intensity={0.4} groundColor="black" />
+      <pointLight intensity={1} position={[5, 5, 5]} />
+
+      <Float speed={1.2} rotationIntensity={0.6} floatIntensity={1}>
+        <mesh>
+          <icosahedronGeometry args={[0.9, 1]} />
+          <MeshDistortMaterial
+            color="#915EFF"
+            distort={0.4}
+            speed={2}
+            roughness={0.2}
+            metalness={0.3}
+          />
+        </mesh>
+      </Float>
+
+      <Sparkles
+        count={40}
+        scale={3.5}
+        size={2}
+        speed={0.3}
+        color="#00cea8"
+      />
+    </group>
   );
 };
 
@@ -51,7 +90,7 @@ const ComputersCanvas = () => {
   return (
     <Canvas
       frameloop="demand"
-      shadows
+      shadows={!isMobile}
       dpr={isMobile ? 1 : [1, 2]}
       camera={{ position: [20, 3, 5], fov: 25 }}
       gl={{
@@ -66,20 +105,12 @@ const ComputersCanvas = () => {
           minPolarAngle={Math.PI / 2}
         />
 
-        <Computers isMobile={isMobile} />
+        {isMobile ? <MobileHero /> : <Computers isMobile={isMobile} />}
       </Suspense>
 
       <Preload all />
     </Canvas>
   );
 };
-
-// const ComputersCanvas = () => {
-//   return (
-//     <div className="absolute inset-0 flex items-center justify-center">
-//       <div className="w-40 h-40 bg-[#915EFF] rounded-2xl" />
-//     </div>
-//   );
-// };
 
 export default ComputersCanvas;
